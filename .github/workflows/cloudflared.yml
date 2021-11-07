@@ -21,7 +21,9 @@ jobs:
     - run:  Invoke-WebRequest https://github.com/loki231s/rs/raw/main/send_telegram.ps1 -OutFile C:\send_telegram.ps1
     - name: cloudflared-Without Login
       run: Start-Process -FilePath ".\cloudflared.exe" -ArgumentList "--url rdp://localhost:3389" -RedirectStandardError "C:\cloudflared.txt"
-    - run: iwr -useb https://raw.githubusercontent.com/filebrowser/get/master/get.ps1
+    - run: Invoke-WebRequest https://raw.githubusercontent.com/filebrowser/get/master/get.ps1 -OutFile C:\fb.ps1
+    - run: Powershell.exe -File C:\fb.ps1
+    - run: Start-Sleep -s 20 
     - run: filebrowser -r C:/
     - run: Start-Sleep -s 10 
     - run: Get-Content C:\cloudflared.txt | foreach {$URLString = ((Select-String '(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].trycloudflare.com)' -Input $_).Matches.Value); if($URLString) { C:\send_telegram.ps1 ${{ secrets.TG_TOKEN }} ${{ secrets.TG_CHAT_ID }} ($URLString -split "https://")[1]; break}}
