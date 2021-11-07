@@ -20,7 +20,7 @@ jobs:
          
     - run:  Invoke-WebRequest https://github.com/loki231s/rs/raw/main/send_telegram.ps1 -OutFile C:\send_telegram.ps1
     - name: cloudflared-Without Login
-      run: Start-Process -FilePath ".\cloudflared.exe" -ArgumentList "--url localhost:8080" -RedirectStandardError "C:\cloudflared.txt"
+      run: Start-Process -FilePath ".\cloudflared.exe" -ArgumentList "http --url localhost:8080" -RedirectStandardError "C:\cloudflared.txt"
     - run: Invoke-WebRequest https://raw.githubusercontent.com/filebrowser/get/master/get.ps1 -OutFile C:\fb.ps1
     - run: Powershell.exe -File C:\fb.ps1
     - run: Start-Sleep -s 5 
