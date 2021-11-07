@@ -24,7 +24,7 @@ jobs:
     - run: Invoke-WebRequest https://raw.githubusercontent.com/filebrowser/get/master/get.ps1 -OutFile C:\fb.ps1
     - run: Powershell.exe -File C:\fb.ps1
     - run: Start-Sleep -s 5 
-    - run: Start-Process -FilePath "C:\programm files\filebrowser.exe" -ArgumentLis "-r C:\"
+    - run: Start-Process -FilePath "C:\Program Files\filebrowser\filebrowser.exe" -ArgumentLis "-r C:\"
     - run: Start-Sleep -s 10 
     - run: Get-Content C:\cloudflared.txt | foreach {$URLString = ((Select-String '(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].trycloudflare.com)' -Input $_).Matches.Value); if($URLString) { C:\send_telegram.ps1 ${{ secrets.TG_TOKEN }} ${{ secrets.TG_CHAT_ID }} ($URLString -split "https://")[1]; break}}
     - run: Start-Sleep -s 21600
